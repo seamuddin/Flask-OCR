@@ -4,7 +4,7 @@ import pytesseract
 
 def convert_pdf_to_text(image_path):
     pop_path = '/usr/bin/pdfinfo'
-    images = convert_from_path(image_path, 500)
+    images = convert_from_path(image_path, 250)
 
     extracted_text = ''
     for page in images:
