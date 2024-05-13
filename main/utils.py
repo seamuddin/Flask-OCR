@@ -6,7 +6,7 @@ import pytesseract
 
 def convert_pdf_to_text(image_path):
     os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
-    images = convert_from_path(image_path, 250)
+    images = convert_from_path(image_path, 500)
 
     extracted_text = ''
     for page in images:
