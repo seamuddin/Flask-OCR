@@ -30,9 +30,16 @@ def uplaod_pdf():
         pdf_path = os.path.join(UPLOAD_FOLDER, pdf_file.filename)
         pdf_file.save(pdf_path)
 
-        text = convert_pdf_to_text(pdf_path)
+        # text = convert_pdf_to_text(pdf_path)
+        text = 'hfsfsfjklsf hslkhfslfs'
+        data = {
+            'contextData' : text
+        }
+    
+        return render_template("upload.html", data=data)
 
-        return jsonify({'data': text}), 200
+        # return jsonify({'data': text}), 200
+    
 
 
 
