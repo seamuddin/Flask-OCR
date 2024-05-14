@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify,Flask, render_template, request
 from main.utils import convert_pdf_to_text
 import tempfile
 import os
-
+from main.utils import get_dict_from_string
 route = Blueprint('bscic_api_service', __name__)
 
 UPLOAD_FOLDER = 'uploads'
@@ -48,6 +48,24 @@ def uplaod_pdf():
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+@route.route("/store", methods=["POST"])
+def store_data():
+    if request.method == 'POST':
+
+        text = get_dict_from_string(request.form['textdata'])
+        union = request.form['union']
+
+        return jsonify({'error': 'Okay', 'data': text}), 200
+
+        # return jsonify({'data': text}), 200
+    
+
+
+
+    return render_template("test.html")
+
 
 
             
