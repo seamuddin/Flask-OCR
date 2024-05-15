@@ -7,3 +7,4 @@ SQLAlchemy==1.4.45
 Werkzeug==2.2.2
 pdf2image
 pytesseract
+pymysql
