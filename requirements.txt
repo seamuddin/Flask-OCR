@@ -1,5 +1,9 @@
-Flask==3.0.3
+Flask==2.2.2
+Flask-JWT-Extended==4.4.4
+Flask-SQLAlchemy==3.0.2
+MarkupSafe==2.1.1
+requests==2.28.2
+SQLAlchemy==1.4.45
+Werkzeug==2.2.2
 pdf2image
 pytesseract
-mysql-connector-python
-flask_sqlalchemy 
