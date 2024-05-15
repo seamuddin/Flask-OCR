@@ -1,5 +1,5 @@
-<form action="">
-    <select class="form-control" id="union" name="union">
+<form action="/store" method="post">
+    <select class="form-control" id="union" name="union" required>
                                     <option value="">Select Upazila</option>
                                     <option value="আমলাব">আমলাব</option>
                                     <option value="চরউজিলাব">চরউজিলাব</option>
@@ -10,7 +10,7 @@
                                     <option value="পাটুলী">পাটুলী</option>
                                     <option value="সাল্লাবাদ">সাল্লাবাদ</option>
                                     <!-- Add more options as needed -->
-    </select></form><br>
+    </select><br>
     <textarea id="textdata" name="textdata" rows="4" cols="50">
         {{ data.contextData }}
     </textarea><br>

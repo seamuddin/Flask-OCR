@@ -16,34 +16,30 @@ def convert_pdf_to_text(image_path):
     return extracted_text
 
 
-def get_dict_from_string(data):
-    # Define the regex pattern to capture names
-    name_pattern = r". নাম:\s(.*?)(?=\sভোটার নং:|\nভোটার নং:|\n\nভোটার নং:|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[A-Z]|[8]|$)"
-    # name_pattern = r". নাম:\s(.*?)(?=\sভোটার নং:|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[A-Z]|$)"
-    voter_no_pattern = r"ভোটার নং: (.*?)\s"
-    ocupation_pattern = r"পেশা: (.*?)(?=\s|,জন্ম|$)"
-    father_pattern = r"পিতা: (.*?)(?=\sমাতা:|\n|পিতা:|[০১২৩৪৫৬৭৮৯]|$)"
-    mother_pattern = r"মাতা: (.*?)(?=\sমাতা:|\n|পিতা:|[০১২৩৪৫৬৭৮৯]|$)"
-    birth_pattern = r"জন্ম তারিখ:(.*?)(?=\sমাতা:|\n|পিতা:|[০১২৩৪৫৬৭৮৯]|$)"
-    address = r"ঠিকানা:(.*?)(?=\sমাতা:|\n|পিতা:|ঠিকানা:|[০১২৩৪৫৬৭৮৯]|$)"
+def get_dict_from_text(text_data):
 
+    name_pattern = r"নাম: (.*?)(?=\n|ভোটার নং:|\nভোটার নং:|\n\nভোটার নং|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯].|YOR.|FAY|[0123456789]|[0123456789].$)"
+    voter_no_pattern = r"(?:ভোটার নং:|\sভোটার নং:) (.*?)(?=\n|ভোটার নং:|\nভোটার নং:|\n\nভোটার নং|পিতা:|$)"
+    ocupation_pattern = r"পেশা: (.*?)(?=,|,জন্ম তারিখ:|\nজন্ম তারিখ:|\n\nজন্ম তারিখ:|$)"
+    fathers_pattern = r"পিতা: (.*?)(?=\n|পিতা:|মাতা:|\nমাতা:|\n\nমাতা:|[০১২৩৪৫৬৭৮৯]$)"
+    mothers_pattern = r"মাতা: (.*?)(?=\-\n|মাতা:|\sভোটার নং:|\n|\nভোটার নং:|\n\nভোটার নং:|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[A-Z]|[a-z]|[8]|$)"
+    dob_pattern = r"(?:জন্ম তারিখ:|,জন্ম তারিখ:|\n\nজন্ম তারিখ)(.*?)(?=\n|মাতা:|পেশা:|ঠিকানা:|মাইগ্রেট|কর্তন|তারিখ:|তারিখ্\u200c|\sভোটার নং:|\n$)"
+    address_pattern = r"(?:ঠিকানা:|ঠিকানা)(.*?)(?=\n|\|\||\||\sভোটার নং:|\n|\nভোটার নং:|\n\nভোটার নং:|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[A-Z]|[a-z]|[8]|$)"
     # Find all matches
-    matches1 = re.findall(name_pattern, data)
-    matches2 = re.findall(voter_no_pattern, data)
-    matches3 = re.findall(ocupation_pattern,data)
-    matches4 = re.findall(father_pattern,data)
-    matches5 = re.findall(mother_pattern,data)
-    matches6 = re.findall(birth_pattern,data)
-    matches7 = re.findall(address,data)
-
+    matches1 = re.findall(name_pattern, text_data)
+    matches2 = re.findall(voter_no_pattern, text_data)
+    matches3 = re.findall(ocupation_pattern, text_data)
+    matches4= re.findall(fathers_pattern, text_data)
+    matches5 = re.findall(mothers_pattern, text_data)
+    matches6 = re.findall(dob_pattern, text_data)
+    matches7 = re.findall(address_pattern, text_data)
     data = {
         'name' : matches1,
-        'voter_no' : matches2,
-        'occupation' : matches3,
+        'voter_no': matches2,
+        'ocupation': matches3,
         'father' : matches4,
-        'mother' : matches5,
-        'dob' : matches6,
-        'address' : matches7
+        'mother': matches5,
+        'dob': matches6,
+        'address': matches7
     }
-
     return data
