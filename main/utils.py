@@ -11,7 +11,7 @@ def convert_pdf_to_text(image_path):
     extracted_text = ''
     first_iteration = False
     for page in images:
-        if first_iteration:
+        if first_iteration
             text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
             extracted_text += text + '\n'  # Add a newline between pages if needed
         else:
