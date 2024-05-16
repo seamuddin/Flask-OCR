@@ -1,14 +1,10 @@
 import os
+
 from pdf2image import convert_from_path
 import pytesseract
 import re
-import aiofiles
 
-async def extract_text_from_image(page, lang='eng+ben'):
-    text = pytesseract.image_to_string(page, lang=lang, config='--psm 6')
-    return text
-
-async def convert_pdf_to_text(image_path):
+def convert_pdf_to_text(image_path):
     os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
     images = convert_from_path(image_path, 300)
 
@@ -16,10 +12,9 @@ async def convert_pdf_to_text(image_path):
     count = 1
     for page in images:
         if count == 4:
-            text = await extract_text_from_image(page)
+            text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
             extracted_text += text + '\n'  # Add a newline between pages if needed
         count+=1
-    print(extracted_text)
     return extracted_text
 
 
