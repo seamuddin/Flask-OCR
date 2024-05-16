@@ -33,7 +33,7 @@ def uplaod_pdf():
         pdf_path = os.path.join(UPLOAD_FOLDER, pdf_file.filename)
         pdf_file.save(pdf_path)
 
-        text = asyncio.run(convert_pdf_to_text(pdf_path))
+        text = convert_pdf_to_text(pdf_path)
         data = {
             'contextData' : text
         }
