@@ -4,6 +4,7 @@ import os
 from main.utils import get_dict_from_text
 from main import db
 from main.models import Voter
+import asyncio
 
 route = Blueprint('bscic_api_service', __name__)
 
@@ -32,7 +33,7 @@ def uplaod_pdf():
         pdf_path = os.path.join(UPLOAD_FOLDER, pdf_file.filename)
         pdf_file.save(pdf_path)
 
-        text = convert_pdf_to_text(pdf_path)
+        text = async.run(convert_pdf_to_text(pdf_path))
         data = {
             'contextData' : text
         }
@@ -86,22 +87,6 @@ def store_data():
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-
-@route.route("/store", methods=["POST"])
-def store_data():
-    if request.method == 'POST':
-
-        text = get_dict_from_string(request.form['textdata'])
-        union = request.form['union']
-
-        return jsonify({'error': 'Okay', 'data': text}), 200
-
-        # return jsonify({'data': text}), 200
-    
-
-
-
-    return render_template("test.html")
 
 
 
