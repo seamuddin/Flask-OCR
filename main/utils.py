@@ -8,10 +8,47 @@ def convert_pdf_to_text(image_path):
     images = convert_from_path(image_path, 300)
 
     extracted_text = ''
+    main_list = 
+    first = True
     for page in images:
-        text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
-        extracted_text += text + '\n'  # Add a newline between pages if needed
-    return extracted_text
+        if first:
+            continue
+        else:
+            text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
+            # extracted_text += text + '\n'  # Add a newline between pages if needed
+            manipulated_dict = get_dict_from_text(text)
+            prepared_data = []
+            try:
+                count = 0
+
+                for data in manipulated_dict.get('name'):
+                    temp_dict = {}
+                    if len(manipulated_dict.get('ocupation')) > count:
+                        voter_no = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
+                        result = Voter.query.filter_by(voter_no=voter_no).first()
+                        if not result:
+                            temp_dict['name'] = data.replace('\n', '').replace('\r','').replace('\\n','')
+                            temp_dict['voter_no'] = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
+                            temp_dict['ocupation'] = manipulated_dict.get('ocupation')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('ocupation')) > count else ''
+                            temp_dict['fathers_or_husband'] = manipulated_dict.get('father')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('father')) > count else ''
+                            temp_dict['mother'] = manipulated_dict.get('mother')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('mother')) > count else ''
+                            temp_dict['birth_date'] = manipulated_dict.get('dob')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('dob')) > count else ''
+                            temp_dict['election_area'] = manipulated_dict.get('address')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('-', '').replace('\n','').replace("\\",'') if len(manipulated_dict.get('address')) > count else ''
+                            temp_dict['union'] = union
+                            temp_dict['si'] =  manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
+                            prepared_data.append(temp_dict)
+                    count += 1
+                
+                db.session.bulk_insert_mappings(Voter, prepared_data)
+                db.session.commit()
+                return jsonify({'success': 'data inserted successfully', 'data': prepared_data}), 200
+            except Exception as e:
+                db.session.rollback()
+                db.session.close()
+                return jsonify({'error': 'can not store data'+str(e), 'data': prepared_data}), 400
+            main_list+=prepared_data
+        
+    return main_list
 
 
 def get_dict_from_text(text_data):

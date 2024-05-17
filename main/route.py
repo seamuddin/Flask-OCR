@@ -4,7 +4,6 @@ import os
 from main.utils import get_dict_from_text
 from main import db
 from main.models import Voter
-import asyncio
 
 route = Blueprint('bscic_api_service', __name__)
 
@@ -32,13 +31,18 @@ def uplaod_pdf():
 
         pdf_path = os.path.join(UPLOAD_FOLDER, pdf_file.filename)
         pdf_file.save(pdf_path)
+        union = request.form.get('union')
+        data = convert_pdf_to_text(pdf_path, union)
+        try:
+            db.session.bulk_insert_mappings(Voter, data)
+            db.session.commit()
+            return jsonify({'success': 'data inserted successfully', 'data': data}), 200
+        except Exception as e:
+            db.session.rollback()
+            db.session.close()
+            return jsonify({'error': 'can not store data'+str(e), 'data': prepared_data}), 400
 
-        text = convert_pdf_to_text(pdf_path)
-        data = {
-            'contextData' : text
-        }
-    
-        return render_template("upload.html", data=data)
+        return jsonify({'success': 'data inserted successfully', 'data': data}), 200
 
         # return jsonify({'data': text}), 200
 
