@@ -28,7 +28,7 @@ def convert_pdf_to_text(image_path, union):
                     result = Voter.query.filter_by(voter_no=voter_no).first()
                     if not result:
                         temp_dict['name'] = data.replace('\n', '').replace('\r','').replace('\\n','')
-                        temp_dict['voter_no'] = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
+                        temp_dict['voter_no'] = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('ocupation')) > count else ''
                         temp_dict['ocupation'] = manipulated_dict.get('ocupation')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('ocupation')) > count else ''
                         temp_dict['fathers_or_husband'] = manipulated_dict.get('father')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('father')) > count else ''
                         temp_dict['mother'] = manipulated_dict.get('mother')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('mother')) > count else ''
