@@ -17,9 +17,8 @@ def convert_pdf_to_text(image_path, union):
             text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
             # extracted_text += text + '\n'  # Add a newline between pages if needed
             manipulated_dict = get_dict_from_text(text)
-        
+            print(manipulated_dict)
             count = 0
-
             for data in manipulated_dict.get('name'):
                 temp_dict = {}
                 if len(manipulated_dict.get('ocupation')) > count:

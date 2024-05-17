@@ -33,6 +33,7 @@ def uplaod_pdf():
         pdf_file.save(pdf_path)
         union = request.form.get('union')
         data = convert_pdf_to_text(pdf_path, union)
+        print(data)
         try:
             db.session.bulk_insert_mappings(Voter, data)
             db.session.commit()
