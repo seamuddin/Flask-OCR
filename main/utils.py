@@ -23,7 +23,7 @@ def convert_pdf_to_text(image_path, union):
             for data in manipulated_dict.get('name'):
                 temp_dict = {}
                 if len(manipulated_dict.get('ocupation')) > count:
-                    voter_no = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('ocupation')) > count else None
+                    voter_no = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('voter_no')) > count else None
                     if voter_no:
                         result = Voter.query.filter_by(voter_no=voter_no).first()
                     if not result:
