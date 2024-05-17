@@ -3,7 +3,7 @@ from pdf2image import convert_from_path
 import pytesseract
 import re
 
-def convert_pdf_to_text(image_path):
+def convert_pdf_to_text(image_path, union):
     os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
     images = convert_from_path(image_path, 300)
 
