@@ -12,6 +12,7 @@ def convert_pdf_to_text(image_path, union):
     first = True
     for page in images:
         if first:
+            first = False
             continue
         else:
             text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
@@ -36,7 +37,8 @@ def convert_pdf_to_text(image_path, union):
                         temp_dict['si'] =  manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
                         main_list.append(temp_dict)
                 count += 1
-            
+        
+
         
     return main_list
 
