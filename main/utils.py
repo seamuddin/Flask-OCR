@@ -62,7 +62,7 @@ def get_dict_from_text(text_data):
     matches6 = re.findall(dob_pattern, text_data)
     matches7 = re.findall(address_pattern, text_data)
     data = {
-        'si': matches
+        'si': matches,
         'name' : matches1,
         'voter_no': matches2,
         'ocupation': matches3,
