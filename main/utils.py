@@ -19,13 +19,13 @@ def convert_pdf_to_text(image_path, union):
             text = pytesseract.image_to_string(page, lang='eng+ben', config='--psm 6')
             # extracted_text += text + '\n'  # Add a newline between pages if needed
             manipulated_dict = get_dict_from_text(text)
-            print(manipulated_dict)
             count = 0
             for data in manipulated_dict.get('name'):
                 temp_dict = {}
                 if len(manipulated_dict.get('ocupation')) > count:
-                    voter_no = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
-                    result = Voter.query.filter_by(voter_no=voter_no).first()
+                    voter_no = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('ocupation')) > count else None
+                    if voter_no:
+                        result = Voter.query.filter_by(voter_no=voter_no).first()
                     if not result:
                         temp_dict['name'] = data.replace('\n', '').replace('\r','').replace('\\n','')
                         temp_dict['voter_no'] = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('ocupation')) > count else ''
@@ -38,9 +38,7 @@ def convert_pdf_to_text(image_path, union):
                         temp_dict['si'] =  manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
                         main_list.append(temp_dict)
                 count += 1
-        
-
-        
+            
     return main_list
 
 
