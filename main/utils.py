@@ -2,6 +2,7 @@ import os
 from pdf2image import convert_from_path
 import pytesseract
 import re
+from main.models import Voter
 
 def convert_pdf_to_text(image_path, union):
     os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
