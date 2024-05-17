@@ -45,7 +45,7 @@ def convert_pdf_to_text(image_path, union):
 
 
 def get_dict_from_text(text_data):
-
+    text_data = text_data.replace('এলাকার নাম :', '').replace('এলাকার নাম', '').replace('এলাকারনাম', '')
     name_pattern = r"নাম: (.*?)(?=\n|ভোটার নং:|\nভোটার নং:|\n\nভোটার নং|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯].|YOR.|FAY|[0123456789]|[0123456789].$)"
     voter_no_pattern = r"(?:ভোটার নং:|\sভোটার নং:) (.*?)(?=\n|ভোটার নং:|\nভোটার নং:|\n\nভোটার নং|পিতা:|$)"
     ocupation_pattern = r"পেশা: (.*?)(?=,|,জন্ম তারিখ:|\nজন্ম তারিখ:|\n\nজন্ম তারিখ:|$)"
