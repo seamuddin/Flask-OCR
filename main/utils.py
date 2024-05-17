@@ -35,7 +35,7 @@ def convert_pdf_to_text(image_path, union):
                             temp_dict['birth_date'] = manipulated_dict.get('dob')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('dob')) > count else ''
                             temp_dict['election_area'] = manipulated_dict.get('address')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('-', '').replace('\n','').replace("\\",'') if len(manipulated_dict.get('address')) > count else ''
                             temp_dict['union'] = union
-                            temp_dict['si'] =  manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
+                            temp_dict['si'] = manipulated_dict.get('si')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('si')) > count else ''
                             main_list.append(temp_dict)
                 count += 1
             
@@ -44,6 +44,7 @@ def convert_pdf_to_text(image_path, union):
 
 def get_dict_from_text(text_data):
     text_data = text_data.replace('এলাকার নাম :', '').replace('এলাকার নাম', '').replace('এলাকারনাম', '')
+    number_pattern = r'([\u09E6-\u09EF]+)\.\s+নাম:'
     name_pattern = r"নাম: (.*?)(?=\n|ভোটার নং:|\nভোটার নং:|\n\nভোটার নং|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯].|YOR.|FAY|[0123456789]|[0123456789].$)"
     voter_no_pattern = r"(?:ভোটার নং:|\sভোটার নং:) (.*?)(?=\n|ভোটার নং:|\nভোটার নং:|\n\nভোটার নং|পিতা:|$)"
     ocupation_pattern = r"পেশা: (.*?)(?=,|,জন্ম তারিখ:|\nজন্ম তারিখ:|\n\nজন্ম তারিখ:|$)"
@@ -52,6 +53,7 @@ def get_dict_from_text(text_data):
     dob_pattern = r"(?:জন্ম তারিখ:|,জন্ম তারিখ:|\n\nজন্ম তারিখ)(.*?)(?=\n|মাতা:|পেশা:|ঠিকানা:|মাইগ্রেট|কর্তন|তারিখ:|তারিখ্\u200c|\sভোটার নং:|\n$)"
     address_pattern = r"(?:ঠিকানা:|ঠিকানা)(.*?)(?=\n|\|\||\||\sভোটার নং:|\n|\nভোটার নং:|\n\nভোটার নং:|\s[০১২৩৪৫৬৭৮৯]|[০১২৩৪৫৬৭৮৯]|[A-Z]|[a-z]|[8]|$)"
     # Find all matches
+    matches = re.findall(number_pattern, text_data)
     matches1 = re.findall(name_pattern, text_data)
     matches2 = re.findall(voter_no_pattern, text_data)
     matches3 = re.findall(ocupation_pattern, text_data)
@@ -60,6 +62,7 @@ def get_dict_from_text(text_data):
     matches6 = re.findall(dob_pattern, text_data)
     matches7 = re.findall(address_pattern, text_data)
     data = {
+        'si': matches
         'name' : matches1,
         'voter_no': matches2,
         'ocupation': matches3,
