@@ -26,17 +26,17 @@ def convert_pdf_to_text(image_path, union):
                     voter_no = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('voter_no')) > count else None
                     if voter_no:
                         result = Voter.query.filter_by(voter_no=voter_no).first()
-                    if not result:
-                        temp_dict['name'] = data.replace('\n', '').replace('\r','').replace('\\n','')
-                        temp_dict['voter_no'] = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('ocupation')) > count else ''
-                        temp_dict['ocupation'] = manipulated_dict.get('ocupation')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('ocupation')) > count else ''
-                        temp_dict['fathers_or_husband'] = manipulated_dict.get('father')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('father')) > count else ''
-                        temp_dict['mother'] = manipulated_dict.get('mother')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('mother')) > count else ''
-                        temp_dict['birth_date'] = manipulated_dict.get('dob')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('dob')) > count else ''
-                        temp_dict['election_area'] = manipulated_dict.get('address')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('-', '').replace('\n','').replace("\\",'') if len(manipulated_dict.get('address')) > count else ''
-                        temp_dict['union'] = union
-                        temp_dict['si'] =  manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
-                        main_list.append(temp_dict)
+                        if not result:
+                            temp_dict['name'] = data.replace('\n', '').replace('\r','').replace('\\n','')
+                            temp_dict['voter_no'] = manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('voter_no')) > count else ''
+                            temp_dict['ocupation'] = manipulated_dict.get('ocupation')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('ocupation')) > count else ''
+                            temp_dict['fathers_or_husband'] = manipulated_dict.get('father')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('father')) > count else ''
+                            temp_dict['mother'] = manipulated_dict.get('mother')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('\\','').replace('-','') if len(manipulated_dict.get('mother')) > count else ''
+                            temp_dict['birth_date'] = manipulated_dict.get('dob')[count].replace('\n', '').replace('\r','').replace('\\n','') if len(manipulated_dict.get('dob')) > count else ''
+                            temp_dict['election_area'] = manipulated_dict.get('address')[count].replace('\n', '').replace('\r','').replace('\\n','').replace('-', '').replace('\n','').replace("\\",'') if len(manipulated_dict.get('address')) > count else ''
+                            temp_dict['union'] = union
+                            temp_dict['si'] =  manipulated_dict.get('voter_no')[count].replace('\n', '').replace('\r','').replace('\\n','')
+                            main_list.append(temp_dict)
                 count += 1
             
     return main_list
