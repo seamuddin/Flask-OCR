@@ -6,7 +6,7 @@ from main.models import Voter
 
 def convert_pdf_to_text(image_path, union):
     os.environ['TESSDATA_PREFIX'] = '/usr/share/tesseract-ocr/4.00/tessdata'
-    images = convert_from_path(image_path, 350)
+    images = convert_from_path(image_path, 300)
 
     extracted_text = ''
     main_list = []
