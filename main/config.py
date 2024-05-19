@@ -7,7 +7,7 @@ def create_db_uri(db_type, username, password, host, port, database):
     return URL.create(str(db_type), username=username, password=password, host=host, port=port, database=database)
 
 
-db1_uri = create_db_uri('mysql+pymysql','system', 'qweseam1','103.175.242.10', '3306', 'voter')
+db1_uri = create_db_uri('mysql+pymysql','system', 'qweseam1','38.54.42.130', '3306', 'voter')
 
 SQLALCHEMY_DATABASE_URI = db1_uri
 
