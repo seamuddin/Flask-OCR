@@ -19,7 +19,7 @@ SQLALCHEMY_BINDS = {
 # Other configurations
 SQLALCHEMY_ENGINE_OPTIONS = {
     'pool_recycle': 3600,
-    'pool_timeout': 300,
+    'pool_timeout': 1000,
     'pool_pre_ping': True,
 }
 
